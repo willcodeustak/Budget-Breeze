@@ -5,6 +5,7 @@ export interface TransactionsItemProps {
 		amount: number;
 		date: string;
 		budget_id: string;
+		budgetColor: string;
 	};
 	budgets: {
 		id: string;
@@ -12,4 +13,5 @@ export interface TransactionsItemProps {
 		spent: number;
 	}[];
 	onUpdate: () => void;
+	budgetColor: string;
 }
