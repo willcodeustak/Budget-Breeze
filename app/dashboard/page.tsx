@@ -8,7 +8,11 @@ import type { Budget } from '../types/budget';
 import Table from '../components/dashboard-content/Table';
 import { Toaster } from 'react-hot-toast';
 
-export default function DashboardPage() {
+export default function DashboardPage({
+	isSideNavOpen,
+}: {
+	isSideNavOpen: boolean;
+}) {
 	const [budgets, setBudgets] = useState<Budget[]>([]);
 	const [transactions, setTransactions] = useState<any[]>([]);
 	const [visibleBudgets, setVisibleBudgets] = useState<Budget[]>([]);
@@ -57,7 +61,7 @@ export default function DashboardPage() {
 		fetchBudgets();
 		fetchTransactions();
 	}, []);
-
+	//might have to change to 3x3
 	useEffect(() => {
 		const start = page * 8;
 		const end = start + 8;
@@ -91,7 +95,11 @@ export default function DashboardPage() {
 	};
 
 	return (
-		<div className="min-h-screen flex flex-col ml-0">
+		<div
+			className={`min-h-screen flex flex-col transition-all duration-300 ${
+				isSideNavOpen ? 'pl-72' : 'pl-0'
+			}`}
+		>
 			<Toaster position="top-center" />
 			<h1 className="text-5xl font-extrabold text-gray-900 text-center mb-10 dark:text-white">
 				Budget Overview

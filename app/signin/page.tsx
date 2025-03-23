@@ -65,9 +65,9 @@ export default function SigninPage() {
 			const user = await getUser();
 
 			const displayName = user?.user_metadata?.display_name || 'User';
-
 			toast.success(`Welcome back, ${displayName} 🎉`, {
-				className: 'text-xl p-4 min-w-[300px]',
+				className: 'text-xl min-w-[300px] z-[9999]',
+				duration: 5000,
 			});
 
 			setTimeout(() => router.push('/dashboard'), 1500);
