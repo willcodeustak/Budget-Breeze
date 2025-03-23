@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Budget Breeze
 
-## Getting Started
+> **Budget Breeze** merges my passion for financial freedom and development, offering an intuitive platform for managing budgets, tracking expenses, and helping users take control of their finances.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## **Upon Landing, Users Are Greeted With...**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Landing Page](https://github.com/user-attachments/assets/8737f2b4-022a-41a1-a64d-0e1512e8b4b6)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## **Budget & Transaction Management**
 
-## Learn More
+- Create budgets and track transactions within them.
+- Full CRUD functionality for managing budgets and transactions.
+- Receipt-like logs for easy transaction tracking.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## **Budget Insights**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Visual indicators show how much of your budget has been spent and how much remains.
+- Stay on top of your finances with clear, actionable insights.
 
-## Deploy on Vercel
+![Budget Insights](https://github.com/user-attachments/assets/abfbf31e-b2bb-4f24-ba17-e6b8fbb9f5bb)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## **Transaction Tracking**
+
+- Add expenses with details like amount, category, description, and date.
+- View a detailed, sortable table of all transactions.
+
+![Transaction Tracking](https://github.com/user-attachments/assets/b01bf3b7-3540-4efe-b01f-aab31e8b955e)
+
+---
+
+## **Reports & Analytics**
+
+- Automatically calculate daily, weekly, and monthly expense totals.
+- Interactive pie charts visualize spending by category.
+- Filter expenses by date, week, or month for deeper insights.
+
+**Week of Feb 3 - Feb 9**
+
+![Week 1 Report](https://github.com/user-attachments/assets/376949fc-8ef5-463b-a9bb-bb026586f935)
+
+**Week of Feb 10 - Feb 16**
+
+![Week 2 Report](https://github.com/user-attachments/assets/be2c6bed-7e4d-403c-8d23-9125d67d78c1)
+
+---
+
+## **User Engagement Features**
+
+### Dark Mode
+
+
+
+https://github.com/user-attachments/assets/eb6d4a4c-464c-4ec8-8ee3-ea0d9171c377
+
+
+### Pagination
+
+
+
+
+https://github.com/user-attachments/assets/d59016dd-9d51-4e24-a58c-a0ec5ece3ef1
+
+
+### Chatbot
+
+
+https://github.com/user-attachments/assets/e6813a67-f933-43e5-9c33-5b4e03fd2e6b
+
+
+---
+
+## **Future Features**
+
+> Future features that I want to implement are:
+
+- **Gamification**:
+  - Users can create their own missions or choose from Budget Breeze's pre-defined missions based on their financial goals.
+
+- **Debt Management Tools**:
+  - Provide users with a clear path to get back on budget if they overspend.
+
+- **Share Budgets**:
+  - Users can share budgets with family or friends and track group spending collaboratively.
+
+- **Bank Account Integration** (requires more research):
+  - Automatically sync transactions and categorize expenses by integrating with users' bank accounts.
+
+---
+Questions and Suggestions are welcomed, find me on Linkedin!
