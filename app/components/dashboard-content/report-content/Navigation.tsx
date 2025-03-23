@@ -1,15 +1,20 @@
 'use client';
 
 import Link from 'next/link';
-import { Home, PieChart, LogOut, Menu } from 'lucide-react'; // Added Menu icon
+import { Home, PieChart, LogOut, Menu } from 'lucide-react';
 import { useAuth } from '../../../utils/auth';
 import triple from '../../../images/triple.png';
 import Image from 'next/image';
 import { useState } from 'react';
 
-export default function Navigation() {
+export default function Navigation({
+	isSideNavOpen,
+	setIsSideNavOpen,
+}: {
+	isSideNavOpen: boolean;
+	setIsSideNavOpen: (isOpen: boolean) => void;
+}) {
 	const { user } = useAuth();
-	const [isSideNavOpen, setIsSideNavOpen] = useState(false); // State to manage side nav visibility
 
 	if (!user) {
 		return null;
@@ -17,15 +22,12 @@ export default function Navigation() {
 
 	return (
 		<>
-			{/* Mobile Toggle Button */}
 			<button
 				onClick={() => setIsSideNavOpen(!isSideNavOpen)}
 				className="fixed top-4 left-4 z-50 p-2 bg-gray-800 text-white rounded-lg sm:hidden"
 			>
 				<Menu size={24} />
 			</button>
-
-			{/* Side Navigation Bar */}
 			<nav
 				className={`w-60 bg-gray-800 text-white h-screen shadow-lg fixed top-0 left-0 z-40 transform transition-transform duration-300 ease-in-out ${
 					isSideNavOpen ? 'translate-x-0' : '-translate-x-full'
