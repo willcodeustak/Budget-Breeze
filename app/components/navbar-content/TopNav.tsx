@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { Home, PieChart } from 'lucide-react';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownMessage from './DropdownMessage';
 import { useAuth } from '../../utils/auth';
@@ -7,8 +9,10 @@ import { supabase } from '@/lib/supabase';
 import { useState, useRef, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { LogOut } from 'lucide-react';
+import triple from '../../images/triple.png'; // Import the logo
+import Image from 'next/image';
 
-export default function Navigation() {
+export default function TopNav() {
 	const { user, signOutAndRedirect } = useAuth();
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [newPassword, setNewPassword] = useState('');
@@ -63,7 +67,6 @@ export default function Navigation() {
 		}
 	};
 
-	// Enhanced logout function
 	const handleLogout = async () => {
 		setIsDropdownOpen(false);
 		await signOutAndRedirect();
@@ -71,15 +74,28 @@ export default function Navigation() {
 
 	return (
 		<nav className="w-full bg-gray-800 text-white shadow-lg top-0 z-50 sticky">
-			<div className="flex items-center justify-between px-4 py-2.5 md:px-6 2xl:px-11 gap-4">
-				{/* Top nav components */}
-				<div className="flex items-center gap-4"></div>
+			<div className="flex items-center justify-between px-4 py-2.5 md:px-6  gap-4">
+				{/* Logo and Dashboard/Reports Links (Visible on All Screens) */}
+				<div className="flex items-center gap-4">
+					<Link href="/dashboard" className="flex items-center gap-2">
+						<Image
+							src={triple}
+							alt="Budget Breeze Logo"
+							width={30}
+							height={30}
+						/>
+						<h1 className="text-xl px-4  font-extrabold text-white whitespace-nowrap">
+							Budget Breeze
+						</h1>
+					</Link>
+				</div>
 
+				{/* Dashboard and Reports Links (Visible on Small Screens) */}
+
+				{/* User Options */}
 				<div className="flex items-center gap-4">
 					<DarkModeSwitcher />
 					<DropdownMessage />
-
-					{/* User options dropdown */}
 					<div className="relative" ref={dropdownRef}>
 						<button
 							onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -139,7 +155,6 @@ export default function Navigation() {
 												Change Password
 											</span>
 										</button>
-
 										<button
 											onClick={handleLogout}
 											className="flex items-center text-gray-800 dark:text-gray-300 p-2 rounded-lg transition-all duration-200 ease-in-out w-full hover:bg-gray-700 hover:text-red-400 dark:hover:bg-gray-600 dark:hover:text-red-400"

@@ -5,7 +5,7 @@ export interface TransactionsItemProps {
 		amount: number;
 		date: string;
 		budget_id: string;
-		budgetColor: string;
+		// budgetColor: string;
 	};
 	budgets: {
 		id: string;

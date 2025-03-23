@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import chatbot from '../../images/chatbot.svg';
+import chatbot from '../../images/chatbot.svg'; // Ensure this path is correct
 import ReactMarkdown from 'react-markdown';
 import { BiSend } from 'react-icons/bi';
+import robotic from '../../images/robotic.png';
+import Image from 'next/image';
 
 type Message = {
 	text: string;
@@ -72,8 +74,15 @@ const DropdownMessage = () => {
 
 		try {
 			const API_KEY = process.env.NEXT_PUBLIC_API_GENERATIVE_LANGUAGE_CLIENT;
+
+			console.log(
+				'API Key:',
+				process.env.NEXT_PUBLIC_API_GENERATIVE_LANGUAGE_CLIENT
+			);
+
 			const response = await fetch(
-				`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
+				`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+
 				{
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
@@ -106,11 +115,12 @@ const DropdownMessage = () => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (chatEndRef.current) {
-	// 		chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
-	// 	}
-	// }, [messages]);
+	// Scroll to bottom when messages update
+	useEffect(() => {
+		if (chatEndRef.current) {
+			chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+		}
+	}, [messages]);
 
 	return (
 		<li className="relative list-none">
@@ -123,9 +133,15 @@ const DropdownMessage = () => {
 
 			{dropdownOpen && (
 				<div className="absolute text-gray-800 -right-16 mt-2.5 flex h-100 w-80 flex-col rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-					<div className="flex items-center justify-between bg-indigo-600 text-white p-3">
+					<div className="flex items-center justify-between bg-indigo-600 rounded-t-xl border-[0.5px] text-white p-3">
 						<div className="flex items-center">
-							<img src={chatbot} alt="Logo" className="w-8 h-8" />
+							<Image
+								src={robotic}
+								alt="Logo"
+								width={32}
+								height={32}
+								className="w-8 h-8"
+							/>
 							<div className="ml-3">
 								<p className="text-sm font-bold">Budget Breeze</p>
 								<p className="text-xs text-green-400">● Online</p>
@@ -159,7 +175,6 @@ const DropdownMessage = () => {
 					)}
 					{!showPredefinedQuestions && (
 						<div className="flex-1 max-h-[300px] overflow-y-auto space-y-2 p-3">
-							{' '}
 							{messages.map((msg, index) => (
 								<div
 									key={index}
