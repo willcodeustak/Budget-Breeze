@@ -7,6 +7,7 @@ import TopNav from './components/navbar-content/TopNav';
 import { useAuth } from './utils/auth';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -44,6 +45,20 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={inter.className}>
+				<Toaster
+					position="top-center"
+					containerStyle={{
+						position: 'fixed',
+						left: 'calc(50% + 120px)', // 120px = half of sidebar width
+						transform: 'translateX(-50%)',
+						top: '1rem',
+						zIndex: 9999,
+					}}
+					toastOptions={{
+						className: 'text-xl min-w-[300px]',
+						duration: 5000,
+					}}
+				/>
 				<TopNav />
 				<div className="flex">
 					{isDashboard && (

@@ -100,7 +100,7 @@ export default function DashboardPage({
 				isSideNavOpen ? 'pl-72' : 'pl-0'
 			}`}
 		>
-			<Toaster position="top-center" />
+			{/* <Toaster position="top-center" /> */}
 			<h1 className="text-5xl font-extrabold text-gray-900 text-center mb-10 dark:text-white">
 				Budget Overview
 			</h1>

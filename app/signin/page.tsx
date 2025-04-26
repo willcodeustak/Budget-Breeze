@@ -14,34 +14,40 @@ import breeze from '../images/breeze.jpg';
 
 function LeftPanel() {
 	return (
-		<div className="flex flex-1 flex-col justify-center items-start bg-gradient-to-br to-indigo-600 text-black p-12">
-			<div className="text-left flex items-center space-x-3">
-				<Image
-					src={triple}
-					alt="Triple Image"
-					width={60}
-					height={60}
-					className="object-contain"
-				/>
-
-				<h2 className="text-5xl font-extrabold dark:text-white">
-					BudgetBreeze
-				</h2>
-			</div>
-
-			<p className="text-xl italic dark:text-white mt-4">
-				Personal budgeting is a key step toward financial freedom. Start with
-				BudgetBreeze today.
-			</p>
-
-			<div className="mt-12">
-				<Image
-					src={breeze}
-					alt="Business illustration"
-					width={800}
-					height={500}
-					className="rounded-xl shadow-lg"
-				/>
+		<div className="flex-1 flex flex-col justify-center items-end bg-gradient-to-br to-indigo-600 text-black py-12 pr-16">
+			{' '}
+			{/* Adjusted padding */}
+			<div className="text-left w-full max-w-[85%]">
+				<div className="flex items-center space-x-3">
+					{/* Added width constraints */} {/* Added ml-4 */}
+					<Image
+						src={triple}
+						alt="Triple Image"
+						width={60}
+						height={60}
+						className="object-contain"
+					/>
+					<h2 className="text-5xl font-extrabold dark:text-white">
+						BudgetBreeze
+					</h2>
+				</div>
+				<p className="text-xl italic dark:text-white mt-4 ml-4 ">
+					{' '}
+					{/* Added ml-4 */}
+					Personal budgeting is a key step toward financial freedom. Start with
+					BudgetBreeze today.
+				</p>
+				<div className="mt-12 ml-4 mr-8">
+					{' '}
+					{/* Adjusted margins */}
+					<Image
+						src={breeze}
+						alt="Business illustration"
+						width={800}
+						height={500}
+						className="rounded-xl shadow-lg"
+					/>
+				</div>
 			</div>
 		</div>
 	);
@@ -86,10 +92,10 @@ export default function SigninPage() {
 
 	return (
 		<div className="min-h-screen flex">
-			<Toaster />
+			{/* <Toaster /> */}
 			<LeftPanel />
 
-			<div className="w-1/2 flex items-center justify-center bg-white-50 p-12 relative ">
+			<div className="w-[40%] flex items-center justify-center bg-white-50 p-12 relative ">
 				<div className="absolute left-0 h-1/2 w-px bg-gray-300"></div>
 				<div className="max-w-md w-full space-y-8">
 					<h2 className="text-3xl font-extrabold text-gray-900 text-center dark:text-white">
