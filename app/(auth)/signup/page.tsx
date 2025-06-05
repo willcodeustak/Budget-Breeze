@@ -3,10 +3,10 @@
 import type React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signUp } from '../utils/auth';
+import { signUp } from '../../utils/auth';
 import { Toaster, toast } from 'react-hot-toast';
-import breeze from '../images/breeze.jpg';
-import triple from '../images/triple.png';
+import breeze from '../../images/breeze.jpg';
+import triple from '../../images/triple.png';
 
 import Image from 'next/image';
 
@@ -117,11 +117,11 @@ export default function SignUp() {
 								/>
 							</div>
 							<div>
-								<label htmlFor="email-address" className="sr-only">
+								<label htmlFor="emailAddress" className="sr-only">
 									Email address
 								</label>
 								<input
-									id="email-address"
+									id="emailAddress"
 									name="email"
 									type="email"
 									autoComplete="email"
@@ -140,7 +140,7 @@ export default function SignUp() {
 									id="password"
 									name="password"
 									type="password"
-									autoComplete="new-password"
+									autoComplete="newPassword"
 									required
 									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base md:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
 									placeholder="Password"

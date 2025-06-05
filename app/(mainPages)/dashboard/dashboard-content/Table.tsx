@@ -1,8 +1,8 @@
 import TransactionsItem from './TransactionsItem';
 import type { TableProps } from '@/app/types/table';
-import { getBudgetColor } from '../../utils/colors';
+import { getBudgetColor } from '../../../utils/colors';
 import { useState } from 'react';
-import { formatDate } from '../../utils/date';
+import { formatDate } from '../../../utils/date';
 
 export default function Table({
 	transactions,

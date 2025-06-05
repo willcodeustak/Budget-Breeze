@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import type { Budget } from '../../types/budget';
-import { useConfirmDelete } from '../../hooks/useConfirmDelete';
+import type { Budget } from '../../../types/budget';
+import { useConfirmDelete } from '../../../hooks/useConfirmDelete';
 import { toast } from 'react-hot-toast';
-import { getBudgetColor } from '../../utils/colors';
+import { getBudgetColor } from '../../../utils/colors';
 
 interface BudgetItemProps {
 	budget: Budget;

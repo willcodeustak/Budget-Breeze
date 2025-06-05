@@ -3,14 +3,14 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { signIn } from '../utils/auth';
+import { signIn } from '../../utils/auth';
 import type { AuthError } from '@supabase/supabase-js';
 import { Toaster, toast } from 'react-hot-toast';
 import Image from 'next/image';
-import { getUser } from '../utils/auth';
-import Loading from '../dashboard/dashboard-content/loading';
-import triple from '../images/triple.png';
-import breeze from '../images/breeze.jpg';
+import { getUser } from '../../utils/auth';
+import Loading from '../../(mainPages)/dashboard/dashboard-content/loading';
+import triple from '../../images/triple.png';
+import breeze from '../../images/breeze.jpg';
 
 function LeftPanel() {
 	return (
@@ -63,20 +63,20 @@ export default function SigninPage() {
 			if (error) throw error;
 
 			const user = await getUser();
+			const displayName =
+				user?.user_metadata?.display_name ||
+				user?.email?.split('@')[0] ||
+				'User';
 
-			const displayName = user?.user_metadata?.display_name || 'User';
-			toast.success(`Welcome back, ${displayName} 🎉`, {
-				className: 'text-xl min-w-[300px] z-[9999]',
-				duration: 5000,
-			});
+			setLoading(false);
 
-			setTimeout(() => router.push('/dashboard'), 1500);
+			toast.success(`Welcome back, ${displayName} 🎉`);
+
+			router.push('/dashboard');
 		} catch (err) {
 			setLoading(false);
 			const authError = err as AuthError;
-			toast.error(authError.message, {
-				className: 'text-xl p-4 min-w-[300px]',
-			});
+			toast.error(authError.message);
 		}
 	};
 

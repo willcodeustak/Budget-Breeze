@@ -2,15 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import Navigation from './components/navbar-content/sideNav';
-import TopNav from './components/navbar-content/TopNav';
+import Navigation from './components/navigation/sideNav';
+import TopNav from './components/navigation/TopNav';
 import { useAuth } from './utils/auth';
 import type { ReactNode } from 'react';
 
 export default function Template({ children }: { children: ReactNode }) {
 	const pathname = usePathname();
 	const { user } = useAuth();
-	const isDashboard = pathname?.startsWith('/dashboard');
+	const isDashboard =
+		pathname?.startsWith('/dashboard') || pathname?.startsWith('/reports');
 	const [isSideNavOpen, setIsSideNavOpen] = useState(false);
 
 	useEffect(() => {

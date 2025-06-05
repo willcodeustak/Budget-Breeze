@@ -4,7 +4,7 @@ import BudgetForm from './dashboard-content/BudgetForm';
 import BudgetItem from './dashboard-content/BudgetItem';
 import TransactionsForm from './dashboard-content/TransactionsForm';
 import { supabase } from '@/lib/supabase';
-import type { Budget } from '../types/budget';
+import type { Budget } from '../../types/budget';
 import Table from './dashboard-content/Table';
 import { Toaster } from 'react-hot-toast';
 
@@ -106,7 +106,24 @@ export default function DashboardPage() {
 
 	return (
 		<div className="min-h-screen flex flex-col">
-			<Toaster position="top-center" />
+			<Toaster
+				position="top-center"
+				containerClassName="!fixed !top-4 !left-1/2 !transform !-translate-x-1/2 lg:!translate-x-[calc(-50%+120px)]"
+				toastOptions={{
+					style: {
+						maxWidth: '500px',
+						width: 'max-content',
+						whiteSpace: 'nowrap',
+						padding: '16px',
+						display: 'flex',
+						alignItems: 'center',
+						fontSize: '1.25rem',
+					},
+					success: {
+						duration: 3000,
+					},
+				}}
+			/>
 			<h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 text-center mb-6 md:mb-10 dark:text-white">
 				Budget Overview
 			</h1>

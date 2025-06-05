@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { Home, PieChart, Menu, LogOut, User } from 'lucide-react';
-import DarkModeSwitcher from './DarkModeSwitcher';
-import DropdownMessage from './DropdownMessage';
+import DarkModeSwitcher from './features/DarkModeSwitcher';
+import DropdownMessage from './features/GeminiDropdownChat';
 import { useAuth } from '../../utils/auth';
 import { supabase } from '@/lib/supabase';
 import { useState, useRef, useEffect } from 'react';
@@ -30,7 +30,7 @@ export default function TopNav({ isDashboard }: TopNavProps) {
 		const handleClickOutside = (event: MouseEvent) => {
 			// dont use the handleCLickoutside if clicking dark/light toggle
 			const isDarkModeToggle = (event.target as Element)?.closest(
-				'.dark-mode-toggle'
+				'.darkModeToggle'
 			);
 			if (isDarkModeToggle) return;
 
@@ -222,9 +222,9 @@ export default function TopNav({ isDashboard }: TopNavProps) {
 							<span className="text-sm">Dashboard</span>
 						</Link>
 						<Link
-							href="/dashboard/reports"
+							href="/reports"
 							className={`flex items-center gap-2 px-3 py-2.5 rounded-lg ${
-								pathname === '/dashboard/reports'
+								pathname === '/reports'
 									? 'bg-gray-700 text-white'
 									: 'text-gray-300 hover:bg-gray-700 hover:text-white'
 							}`}
