@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { Home, PieChart, LogOut, Menu } from 'lucide-react';
-import { useAuth } from '../../../utils/auth';
-import triple from '../../../images/triple.png';
+import { useAuth } from '../../utils/auth';
 import Image from 'next/image';
+import triple from '../../images/triple.png'; // Import the logo
+
 import { useState } from 'react';
 
-export default function Navigation({
+export default function SideNav({
 	isSideNavOpen,
 	setIsSideNavOpen,
 }: {

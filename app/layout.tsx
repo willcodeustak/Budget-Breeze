@@ -1,7 +1,7 @@
 'use client';
 import './globals.css';
 import { Inter } from 'next/font/google';
-import Navigation from './components/dashboard-content/report-content/Navigation';
+import Navigation from './components/navbar-content/sideNav';
 import type React from 'react';
 import TopNav from './components/navbar-content/TopNav';
 import { useAuth } from './utils/auth';
