@@ -1,22 +1,3 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
-
-async function main() {
-	const user = await prisma.user.create({
-		data: {
-			username: 'test',
-		},
-	});
-
-	console.log('User created:', user);
-}
-
-main()
-	.catch((e) => {
-		console.error(e);
-		process.exit(1);
-	})
-	.finally(async () => {
-		await prisma.$disconnect();
-	});
+/*
+Prisma was used at early development to speed up migrations, now we use supabase which can be shared with incoming developers.
+*/

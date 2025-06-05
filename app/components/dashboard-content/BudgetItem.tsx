@@ -59,89 +59,115 @@ export default function BudgetItem({
 
 	return (
 		<div
-			className={`p-6 rounded-lg shadow-md mb-4 border-4 ${borderColor} border-opacity-50 dark:text-white`}
+			// className={`p-2 sm:p-3 rounded-lg shadow-md border-l-4 ${borderColor} border-opacity-50 dark:text-white text-sm`}
+			className={`p-3 sm:p-4 rounded-lg shadow-md border-l-4 sm:border-4 ${borderColor} border-opacity-50 dark:text-white`}
 		>
 			{isEditing ? (
+				// Mobile-friendly edit form
 				<div className="space-y-2 dark:text-black">
 					<input
 						type="text"
 						value={title}
 						onChange={(e) => setTitle(e.target.value)}
-						className="border p-2 w-full bg-gray-300 dark:text-black"
+						className="border p-2 w-full text-sm sm:text-base"
 					/>
 					<input
 						type="number"
 						value={amount}
 						onChange={(e) => setAmount(Number(e.target.value))}
-						className="border p-2 w-full bg-gray-300 dark:text-black"
+						className="border p-2 w-full text-sm sm:text-base"
 					/>
-					<div className="flex space-x-2 dark:bg-gray-700">
+					<div className="flex gap-2">
 						<button
 							onClick={handleUpdate}
-							className="bg-green-500 text-white px-4 py-2"
+							className="bg-green-500 text-white px-3 py-1 text-sm sm:text-base flex-1"
 						>
 							Save
 						</button>
 						<button
 							onClick={() => setIsEditing(false)}
-							className="bg-gray-500 text-white px-4 py-2 "
+							className="bg-gray-500 text-white px-3 py-1 text-sm sm:text-base flex-1"
 						>
 							Cancel
 						</button>
 					</div>
 				</div>
 			) : (
-				<div>
-					<div className="flex items-center justify-between mb-2">
-						<h2 className="text-2xl font-bold break-words max-w-[70%]">
-							{budget.title}
-						</h2>
-						<span className="font-bold whitespace-nowrap">
-							Budget: ${budget.amount.toFixed(2)}
-						</span>
+				<>
+					{/* Mobile: Compact view */}
+					<div className="sm:hidden">
+						<div className="flex justify-between items-start gap-2">
+							<h3 className="font-bold text-sm line-clamp-1">{budget.title}</h3>
+							<span className="text-xs font-semibold whitespace-nowrap">
+								${budget.amount.toFixed(2)}
+							</span>
+						</div>
+						<div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+							<div
+								className={`h-2 rounded-full ${bgColor}`}
+								style={{
+									width: `${Math.min(
+										100,
+										((budget.spent || 0) / budget.amount) * 100
+									)}%`,
+								}}
+							></div>
+						</div>
+						<div className="flex justify-between mt-1 text-xs">
+							<span>${(budget.spent || 0).toFixed(2)}</span>
+							<span
+								className={isOverBudget ? 'text-red-500' : 'text-green-500'}
+							>
+								${(budget.amount - (budget.spent || 0)).toFixed(2)}
+							</span>
+						</div>
 					</div>
 
-					{/* Progress Bar */}
-					<div className="w-full bg-gray-200 rounded-full h-4 mb-2">
-						<div
-							className={`h-4 rounded-full ${bgColor}`}
-							style={{
-								width: `${Math.min(
-									100,
-									((budget.spent || 0) / budget.amount) * 100
-								)}%`,
-							}}
-						></div>
+					{/* Desktop: Full view */}
+					<div className="hidden sm:block">
+						<div className="flex justify-between items-start gap-2 mb-2">
+							<h2 className="font-bold text-lg line-clamp-2">{budget.title}</h2>
+							<span className="font-semibold whitespace-nowrap">
+								${budget.amount.toFixed(2)}
+							</span>
+						</div>
+						<div className="w-full bg-gray-200 rounded-full h-3 mb-2">
+							<div
+								className={`h-3 rounded-full ${bgColor}`}
+								style={{
+									width: `${Math.min(
+										100,
+										((budget.spent || 0) / budget.amount) * 100
+									)}%`,
+								}}
+							></div>
+						</div>
+						<div className="flex justify-between text-sm mb-3">
+							<span>Spent: ${(budget.spent || 0).toFixed(2)}</span>
+							<span
+								className={isOverBudget ? 'text-red-500' : 'text-green-500'}
+							>
+								Remaining: ${(budget.amount - (budget.spent || 0)).toFixed(2)}
+							</span>
+						</div>
 					</div>
 
-					<div className="flex text-lg mb-4 justify-between">
-						<span className="font-bold">
-							${(budget.spent || 0).toFixed(2)} Spent
-						</span>
-						<span
-							className={`font-bold ${
-								isOverBudget ? 'text-red-500' : 'text-green-500'
-							}`}
-						>
-							${(budget.amount - (budget.spent || 0)).toFixed(2)} Remaining
-						</span>
-					</div>
-
-					<div className="flex gap-2">
+					{/* Actions - same for both */}
+					<div className="flex gap-2 justify-end pt-2 border-t border-gray-200 dark:border-gray-600">
 						<button
-							onClick={() => setIsEditing(!isEditing)}
-							className="text-gray-600 hover:text-gray-800 dark:text-white"
+							onClick={() => setIsEditing(true)}
+							className="text-blue-600 hover:text-blue-800 dark:text-blue-400 text-xs sm:text-sm"
 						>
-							{isEditing ? 'Cancel' : 'Edit'}
+							Edit
 						</button>
 						<button
 							onClick={handleDelete}
-							className="text-red-600 hover:text-red-800"
+							className="text-red-600 hover:text-red-800 text-xs sm:text-sm"
 						>
 							Delete
 						</button>
 					</div>
-				</div>
+				</>
 			)}
 		</div>
 	);

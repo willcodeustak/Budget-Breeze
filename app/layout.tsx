@@ -53,7 +53,7 @@ export default function RootLayout({
 						/>
 					)}
 					<main
-						className={`flex-1 p-8 bg-gray-50 dark:bg-gray-800 transition-all duration-300 ${
+						className={`flex-1 p-8 bg-white dark:bg-gray-800 transition-all duration-300 ${
 							isDashboard && isSideNavOpen ? 'pl-72' : 'pl-0'
 						}`}
 					>

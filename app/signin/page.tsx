@@ -14,7 +14,7 @@ import breeze from '../images/breeze.jpg';
 
 function LeftPanel() {
 	return (
-		<div className="flex flex-1 flex-col justify-center items-start bg-gradient-to-br to-indigo-600 text-black p-12">
+		<div className="hidden md:flex flex-1 flex-col justify-center items-start bg-white to-indigo-600 text-black pl-12 pr-8 lg:pl-16 lg:pr-12">
 			<div className="text-left flex items-center space-x-3">
 				<Image
 					src={triple}
@@ -23,24 +23,22 @@ function LeftPanel() {
 					height={60}
 					className="object-contain"
 				/>
-
-				<h2 className="text-5xl font-extrabold dark:text-white">
-					BudgetBreeze
-				</h2>
+				<h2 className="text-4xl lg:text-5xl font-extrabold">BudgetBreeze</h2>
 			</div>
 
-			<p className="text-xl italic dark:text-white mt-4">
+			<p className="text-lg lg:text-xl italic mt-4 max-w-[90%]">
 				Personal budgeting is a key step toward financial freedom. Start with
 				BudgetBreeze today.
 			</p>
 
-			<div className="mt-12">
+			<div className="mt-8 lg:mt-12 w-full max-w-[90%]">
 				<Image
 					src={breeze}
 					alt="Business illustration"
-					width={800}
-					height={500}
-					className="rounded-xl shadow-lg"
+					width={600}
+					height={300}
+					className="rounded-xl shadow-lg w-full h-auto"
+					priority
 				/>
 			</div>
 		</div>
@@ -85,19 +83,38 @@ export default function SigninPage() {
 	}
 
 	return (
-		<div className="min-h-screen flex">
+		<div className="min-h-screen flex flex-col md:flex-row">
 			<Toaster />
 			<LeftPanel />
 
-			<div className="w-1/2 flex items-center justify-center bg-white-50 p-12 relative ">
-				<div className="absolute left-0 h-1/2 w-px bg-gray-300"></div>
-				<div className="max-w-md w-full space-y-8">
-					<h2 className="text-3xl font-extrabold text-gray-900 text-center dark:text-white">
+			{/* Right Panel - Form */}
+			<div className="w-full md:w-1/2 flex items-center justify-center bg-white dark:bg-gray-800 p-6 md:p-12 relative">
+				<div className="absolute left-0 top-1/2 transform -translate-y-1/2 h-2/3 w-px bg-gray-200 hidden md:block"></div>
+				<div className="max-w-md w-full space-y-6 md:space-y-8">
+					<div className="md:hidden flex justify-center mb-6">
+						<div className="flex items-center space-x-3">
+							<Image
+								src={triple}
+								alt="Triple Image"
+								width={40}
+								height={40}
+								className="object-contain"
+							/>
+							<h2 className="text-3xl font-extrabold dark:text-white">
+								BudgetBreeze
+							</h2>
+						</div>
+					</div>
+
+					<h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white text-center">
 						Sign in to your account
 					</h2>
 
-					<form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-						<div className="rounded-md shadow-sm space-y-4">
+					<form
+						className="mt-4 md:mt-8 space-y-4 md:space-y-6"
+						onSubmit={handleSubmit}
+					>
+						<div className="rounded-md shadow-sm space-y-3 md:space-y-4">
 							<div>
 								<label htmlFor="email-address" className="sr-only">
 									Email address
@@ -108,7 +125,7 @@ export default function SigninPage() {
 									type="email"
 									autoComplete="email"
 									required
-									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
+									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base md:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
 									placeholder="Email address"
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
@@ -124,7 +141,7 @@ export default function SigninPage() {
 									type="password"
 									autoComplete="current-password"
 									required
-									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
+									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base md:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
 									placeholder="Password"
 									value={password}
 									onChange={(e) => setPassword(e.target.value)}
@@ -136,7 +153,7 @@ export default function SigninPage() {
 
 						<button
 							type="submit"
-							className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+							className="w-full flex justify-center py-2 px-4 border border-transparent text-sm md:text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 						>
 							Sign in
 						</button>
@@ -145,7 +162,7 @@ export default function SigninPage() {
 					<div className="text-sm text-center">
 						<Link
 							href="/signup"
-							className="font-medium text-indigo-600 hover:text-indigo-500"
+							className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
 						>
 							Don't have an account? Sign up
 						</Link>
