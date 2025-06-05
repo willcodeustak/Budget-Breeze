@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { TransactionsItemProps } from '@/app/types/transactions';
 import { useConfirmDelete } from '../../hooks/useConfirmDelete';
@@ -17,7 +17,17 @@ export default function TransactionsItem({
 	const [newAmount, setNewAmount] = useState(transactions.amount);
 	const [newDate, setNewDate] = useState(transactions.date.split('T')[0]);
 	const [newBudgetId, setNewBudgetId] = useState(transactions.budget_id);
+	const [isMobile, setIsMobile] = useState(false);
 	const { confirmDelete } = useConfirmDelete();
+
+	useEffect(() => {
+		const checkMobile = () => {
+			setIsMobile(window.innerWidth < 768);
+		};
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+		return () => window.removeEventListener('resize', checkMobile);
+	}, []);
 
 	const handleUpdate = async () => {
 		const amountDifference = newAmount - transactions.amount;
@@ -107,6 +117,79 @@ export default function TransactionsItem({
 		);
 	};
 
+	// Mobile view
+	if (isMobile) {
+		return (
+			<div className="w-full">
+				{isEditing ? (
+					<div className="flex flex-col gap-2 mb-2">
+						<input
+							type="text"
+							value={newTitle}
+							onChange={(e) => setNewTitle(e.target.value)}
+							className="border rounded px-2 py-1 w-full text-xs bg-gray-100 dark:bg-gray-600 dark:text-white"
+							placeholder="Title"
+						/>
+						<input
+							type="number"
+							value={newAmount}
+							onChange={(e) => setNewAmount(Number(e.target.value))}
+							className="border rounded px-2 py-1 w-full text-xs bg-gray-100 dark:bg-gray-600 dark:text-white"
+							placeholder="Amount"
+						/>
+						<input
+							type="date"
+							value={newDate}
+							onChange={(e) => setNewDate(e.target.value)}
+							className="border rounded px-2 py-1 w-full text-xs bg-gray-100 dark:bg-gray-600 dark:text-white"
+						/>
+						<select
+							value={newBudgetId}
+							onChange={(e) => setNewBudgetId(e.target.value)}
+							className="border rounded px-2 py-1 w-full text-xs bg-gray-100 dark:bg-gray-600 dark:text-white"
+						>
+							{budgets.map((budget) => (
+								<option key={budget.id} value={budget.id}>
+									{budget.title}
+								</option>
+							))}
+						</select>
+						<div className="flex justify-end gap-2">
+							<button
+								onClick={handleUpdate}
+								className="text-[10px] text-green-600 hover:text-green-900"
+							>
+								Save
+							</button>
+							<button
+								onClick={() => setIsEditing(false)}
+								className="text-[10px] text-gray-600 hover:text-gray-900"
+							>
+								Cancel
+							</button>
+						</div>
+					</div>
+				) : (
+					<div className="flex justify-end items-center gap-3">
+						<button
+							onClick={() => setIsEditing(true)}
+							className="text-[10px] text-blue-600 hover:text-blue-900"
+						>
+							Edit
+						</button>
+						<button
+							onClick={handleDelete}
+							className="text-[10px] text-red-600 hover:text-red-900"
+						>
+							Delete
+						</button>
+					</div>
+				)}
+			</div>
+		);
+	}
+
+	// Desktop view
 	return (
 		<tr>
 			<td className="px-4 py-3 whitespace-normal break-words max-w-[150px] sm:max-w-none">
@@ -169,7 +252,7 @@ export default function TransactionsItem({
 				)}
 			</td>
 			<td className="px-4 py-3 whitespace-nowrap">
-				<div className="flex justify-start gap-2 text-sm sm:text-base">
+				<div className="flex justify-start gap-2 text-sm">
 					{isEditing ? (
 						<>
 							<button

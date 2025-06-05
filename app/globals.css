@@ -2,20 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-	--background: #ffffff;
-	--foreground: #171717;
-}
+/*
+Needed to force apply styles - custom CSS, especially when dealing with:
+Browser behavior
+System preferences
+Default theme handling
+Performance optimizations
+Global defaults
+*/
 
+/* Force light mode unless .dark class is present */
 @media (prefers-color-scheme: dark) {
-	:root {
-		--background: #0a0a0a;
-		--foreground: #ededed;
+	html:not(.dark) {
+		color-scheme: light;
 	}
 }
 
+/* application was reading user systems light/dark mode. 
+Force colors regardless of system preference */
+:root {
+	color-scheme: light;
+}
+
+:root.dark {
+	color-scheme: dark;
+}
+
 body {
-	color: var(--foreground);
-	background: var(--background);
-	font-family: Arial, Helvetica, sans-serif;
+	@apply text-gray-900 bg-white;
+}
+
+.dark body {
+	@apply text-white bg-gray-800;
 }

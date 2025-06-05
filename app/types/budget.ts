@@ -5,6 +5,7 @@ export interface Budget {
 	title: string;
 	amount: number;
 	spent: number;
+	description?: string;
 
 	// userId: string;
 }

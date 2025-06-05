@@ -12,4 +12,6 @@ export interface TableProps {
 		spent: number;
 	}[];
 	onUpdate: () => void;
+	isLoading?: boolean;
+	error?: string | null;
 }

@@ -158,7 +158,7 @@ const DropdownMessage = () => {
 			{dropdownOpen && (
 				<div
 					ref={dropdownRef}
-					className="absolute text-gray-800 -right-16 mt-2.5 flex h-100 w-80 flex-col rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+					className="absolute text-gray-800 -right-16 mt-2.5 flex h-100 w-[280px] sm:w-80 flex-col rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:-right-16"
 				>
 					<div className="flex items-center justify-between bg-indigo-600 rounded-t-xl border-[0.5px] text-white p-3">
 						<div className="flex items-center">

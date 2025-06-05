@@ -12,7 +12,7 @@ import Image from 'next/image';
 
 function LeftPanel() {
 	return (
-		<div className="hidden md:flex flex-1 flex-col justify-center items-start bg-white to-indigo-600 text-black pl-12 pr-8 lg:pl-16 lg:pr-12">
+		<div className="hidden lg:flex flex-1 flex-col justify-center items-start bg-white dark:bg-gray-800 to-indigo-600 text-black pl-12 pr-8 lg:pl-16 lg:pr-12">
 			<div className="text-left flex items-center space-x-3">
 				<Image
 					src={triple}
@@ -21,10 +21,12 @@ function LeftPanel() {
 					height={60}
 					className="object-contain"
 				/>
-				<h2 className="text-4xl lg:text-5xl font-extrabold">BudgetBreeze</h2>
+				<h2 className="text-4xl lg:text-5xl dark:text-white font-extrabold">
+					BudgetBreeze
+				</h2>
 			</div>
 
-			<p className="text-lg lg:text-xl italic mt-4 max-w-[90%]">
+			<p className="text-lg dark:text-white lg:text-xl italic mt-4 max-w-[90%]">
 				Personal budgeting is a key step toward financial freedom. Start with
 				BudgetBreeze today.
 			</p>
@@ -74,10 +76,10 @@ export default function SignUp() {
 			<LeftPanel />
 
 			{/* Right Panel - Form */}
-			<div className="w-full md:w-1/2 flex items-center justify-center bg-white dark:bg-gray-800 p-6 md:p-12 relative">
-				<div className="absolute left-0 top-1/2 transform -translate-y-1/2 h-2/3 w-px bg-gray-200 hidden md:block"></div>
+			<div className="w-full lg:w-1/2 flex items-center justify-center bg-white dark:bg-gray-800 p-6 md:p-12 relative">
+				<div className="absolute left-0 top-1/2 transform -translate-y-1/2 h-2/3 w-px bg-gray-200 hidden lg:block"></div>
 				<div className="max-w-md w-full space-y-6 md:space-y-8">
-					<div className="md:hidden flex justify-center mb-6">
+					<div className="lg:hidden flex justify-center mb-6">
 						<div className="flex items-center space-x-3">
 							<Image
 								src={triple}

@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { Toaster, toast } from 'react-hot-toast';
-import useColorMode from '../hooks/useColorMode';
+import useColorMode from '../components/navbar-content/useColorMode';
 
 export async function signUp(
 	email: string,
@@ -47,7 +47,6 @@ export function useAuth() {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
-	const [colorMode, setColorMode] = useColorMode();
 
 	useEffect(() => {
 		const {
@@ -61,9 +60,9 @@ export function useAuth() {
 		// like a break call but for listening for auth state
 		return () => subscription.unsubscribe();
 	}, []);
+
 	const signOutAndRedirect = async () => {
 		await signOut();
-		setColorMode('light');
 		toast.success('Until next time!', {
 			className: 'text-xl p-4 min-w-[300px]',
 		});

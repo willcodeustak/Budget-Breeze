@@ -10,12 +10,15 @@ interface BudgetFormProps {
 export default function BudgetForm({ onBudgetAdded }: BudgetFormProps) {
 	const [title, setTitle] = useState('');
 	const [amount, setAmount] = useState('');
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		const {
 			data: { user },
 		} = await supabase.auth.getUser();
+
+		setIsSubmitting(true);
 
 		const { data, error } = await supabase
 			.from('budgets')
@@ -39,6 +42,8 @@ export default function BudgetForm({ onBudgetAdded }: BudgetFormProps) {
 			setTitle('');
 			setAmount('');
 		}
+
+		setIsSubmitting(false);
 	};
 
 	return (
@@ -59,9 +64,14 @@ export default function BudgetForm({ onBudgetAdded }: BudgetFormProps) {
 			/>
 			<button
 				type="submit"
-				className="bg-blue-500 text-white px-4 py-2 dark:text-white "
+				className={`px-4 py-2 text-white transition-colors ${
+					isSubmitting
+						? 'bg-blue-400 cursor-not-allowed'
+						: 'bg-blue-500 hover:bg-blue-600'
+				}`}
+				disabled={isSubmitting}
 			>
-				Create Budget
+				{isSubmitting ? 'Creating...' : 'Create Budget'}
 			</button>
 		</form>
 	);

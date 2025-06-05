@@ -1,11 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
-import BudgetForm from '../components/dashboard-content/BudgetForm';
-import BudgetItem from '../components/dashboard-content/BudgetItem';
-import TransactionsForm from '../components/dashboard-content/TransactionsForm';
+import BudgetForm from './dashboard-content/BudgetForm';
+import BudgetItem from './dashboard-content/BudgetItem';
+import TransactionsForm from './dashboard-content/TransactionsForm';
 import { supabase } from '@/lib/supabase';
 import type { Budget } from '../types/budget';
-import Table from '../components/dashboard-content/Table';
+import Table from './dashboard-content/Table';
 import { Toaster } from 'react-hot-toast';
 
 export default function DashboardPage() {
@@ -14,6 +14,8 @@ export default function DashboardPage() {
 	const [visibleBudgets, setVisibleBudgets] = useState<Budget[]>([]);
 	const [page, setPage] = useState(0);
 	const [isGridMode, setIsGridMode] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
 	const fetchBudgets = async () => {
 		const {
@@ -34,20 +36,32 @@ export default function DashboardPage() {
 	};
 
 	const fetchTransactions = async () => {
-		const {
-			data: { user },
-		} = await supabase.auth.getUser();
+		try {
+			setError(null);
+			setIsLoading(true);
 
-		const { data, error } = await supabase
-			.from('transactions')
-			.select('*')
-			.eq('user_id', user?.id)
-			.order('date', { ascending: false });
+			const {
+				data: { user },
+			} = await supabase.auth.getUser();
 
-		if (error) {
-			console.error('Error fetching transactions:', error);
-		} else {
+			const { data, error } = await supabase
+				.from('transactions')
+				.select('*')
+				.eq('user_id', user?.id)
+				.order('date', { ascending: false });
+
+			if (error) {
+				throw new Error('Error fetching transactions. Please try again.');
+			}
+
 			setTransactions(data);
+		} catch (err) {
+			setError(
+				err instanceof Error ? err.message : 'An unexpected error occurred'
+			);
+			console.error('Error fetching transactions:', err);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -207,6 +221,8 @@ export default function DashboardPage() {
 					transactions={transactions}
 					budgets={budgets}
 					onUpdate={handleTransactionsUpdate}
+					isLoading={isLoading}
+					error={error}
 				/>
 			</div>
 		</div>
