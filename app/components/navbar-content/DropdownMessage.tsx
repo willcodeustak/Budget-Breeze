@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import chatbot from '../../images/chatbot.svg'; // Ensure this path is correct
 import ReactMarkdown from 'react-markdown';
 import { BiSend } from 'react-icons/bi';
 import robotic from '../../images/robotic.png';
@@ -12,24 +11,26 @@ type Message = {
 	read: boolean;
 };
 
+const getFormattedTime = () =>
+	new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
 const DropdownMessage = () => {
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [input, setInput] = useState('');
-	const chatEndRef = useRef<HTMLDivElement | null>(null);
 	const [showPredefinedQuestions, setShowPredefinedQuestions] = useState(true);
+	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const predefinedQuestions = [
-		'What are some tips to save money?',
 		'What is the 50/30/20 budgeting rule?',
+		'How do credit scores affect my finances?',
+		'What are some tips to save money? (Concise)',
+		'What are some common budgeting mistakes to avoid? (Concise)',
 	];
 
 	const handlePredefinedQuestionClick = (question: string) => {
 		setShowPredefinedQuestions(false);
-		const time = new Date().toLocaleTimeString([], {
-			hour: '2-digit',
-			minute: '2-digit',
-		});
+		const time = getFormattedTime();
 		const newUserMessage: Message = {
 			text: question,
 			sender: 'user',
@@ -43,10 +44,7 @@ const DropdownMessage = () => {
 	const handleSend = () => {
 		if (!input.trim()) return;
 
-		const time = new Date().toLocaleTimeString([], {
-			hour: '2-digit',
-			minute: '2-digit',
-		});
+		const time = getFormattedTime();
 		const newUserMessage: Message = {
 			text: input,
 			sender: 'user',
@@ -64,6 +62,42 @@ const DropdownMessage = () => {
 		}
 	};
 
+	useEffect(() => {
+		const handleClickOrEsc = (event: MouseEvent | KeyboardEvent) => {
+			// Close if clicked outside the dropdown
+			if (
+				event instanceof MouseEvent &&
+				dropdownRef.current &&
+				!dropdownRef.current.contains(event.target as Node)
+			) {
+				setDropdownOpen(false);
+				setShowPredefinedQuestions(true);
+			}
+
+			// Close if Escape key is pressed
+			if (event instanceof KeyboardEvent && event.key === 'Escape') {
+				setDropdownOpen(false);
+				setShowPredefinedQuestions(true);
+			}
+		};
+
+		if (dropdownOpen) {
+			document.addEventListener('mousedown', handleClickOrEsc);
+			document.addEventListener('keydown', handleClickOrEsc);
+		}
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOrEsc);
+			document.removeEventListener('keydown', handleClickOrEsc);
+		};
+	}, [dropdownOpen]);
+
+	useEffect(() => {
+		if (!dropdownOpen) {
+			setMessages([]);
+			setShowPredefinedQuestions(true); // reset predefined questions visibility if needed
+		}
+	}, [dropdownOpen]);
 	// Fetch bot response
 	const processMessageToGeminiAPI = async (userMessage: string) => {
 		setMessages((prev) => [
@@ -75,10 +109,10 @@ const DropdownMessage = () => {
 		try {
 			const API_KEY = process.env.NEXT_PUBLIC_API_GENERATIVE_LANGUAGE_CLIENT;
 
-			console.log(
-				'API Key:',
-				process.env.NEXT_PUBLIC_API_GENERATIVE_LANGUAGE_CLIENT
-			);
+			// console.log(
+			// 	'API Key:',
+			// 	process.env.NEXT_PUBLIC_API_GENERATIVE_LANGUAGE_CLIENT
+			// );
 
 			const response = await fetch(
 				`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
@@ -93,10 +127,7 @@ const DropdownMessage = () => {
 			const botMessage =
 				data?.candidates?.[0]?.content?.parts?.[0]?.text ||
 				'No response from bot';
-			const botTime = new Date().toLocaleTimeString([], {
-				hour: '2-digit',
-				minute: '2-digit',
-			});
+			const botTime = getFormattedTime();
 			setMessages((prev) => [
 				...prev.slice(0, -1),
 				{ text: botMessage, sender: 'bot', time: botTime, read: true },
@@ -115,13 +146,6 @@ const DropdownMessage = () => {
 		}
 	};
 
-	// Scroll to bottom when messages update
-	useEffect(() => {
-		if (chatEndRef.current) {
-			chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
-		}
-	}, [messages]);
-
 	return (
 		<li className="relative list-none">
 			<button
@@ -132,7 +156,10 @@ const DropdownMessage = () => {
 			</button>
 
 			{dropdownOpen && (
-				<div className="absolute text-gray-800 -right-16 mt-2.5 flex h-100 w-80 flex-col rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+				<div
+					ref={dropdownRef}
+					className="absolute text-gray-800 -right-16 mt-2.5 flex h-100 w-80 flex-col rounded-xl border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+				>
 					<div className="flex items-center justify-between bg-indigo-600 rounded-t-xl border-[0.5px] text-white p-3">
 						<div className="flex items-center">
 							<Image
@@ -198,7 +225,6 @@ const DropdownMessage = () => {
 									<div className="text-gray-400 text-xs mt-1">{msg.time}</div>
 								</div>
 							))}
-							<div ref={chatEndRef} />
 						</div>
 					)}
 
