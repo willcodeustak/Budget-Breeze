@@ -109,48 +109,48 @@ export default function TransactionsItem({
 
 	return (
 		<tr>
-			<td className="px-6 py-4 whitespace-nowrap">
+			<td className="px-4 py-3 whitespace-normal break-words max-w-[150px] sm:max-w-none">
 				{isEditing ? (
 					<input
 						type="text"
 						value={newTitle}
 						onChange={(e) => setNewTitle(e.target.value)}
-						className="border rounded px-2 py-1 w-full bg-gray-300 dark:text-black"
+						className="border rounded px-2 py-1 w-full text-sm sm:text-base bg-gray-300 dark:text-black"
 					/>
 				) : (
 					transactions.title
 				)}
 			</td>
-			<td className="px-6 py-4 whitespace-nowrap">
+			<td className="px-4 py-3 whitespace-nowrap">
 				{isEditing ? (
 					<input
 						type="number"
 						value={newAmount}
 						onChange={(e) => setNewAmount(Number(e.target.value))}
-						className="border rounded px-2 py-1 w-full bg-gray-300 dark:text-black"
+						className="border rounded px-2 py-1 w-full text-sm sm:text-base bg-gray-300 dark:text-black"
 					/>
 				) : (
 					`$${transactions.amount.toFixed(2)}`
 				)}
 			</td>
-			<td className="px-6 py-4 whitespace-nowrap ">
+			<td className="px-4 py-3 whitespace-nowrap">
 				{isEditing ? (
 					<input
 						type="date"
 						value={newDate}
 						onChange={(e) => setNewDate(e.target.value)}
-						className="border rounded px-2 py-1 w-full bg-gray-300 dark:text-black"
+						className="border rounded px-2 py-1 w-full text-sm sm:text-base bg-gray-300 dark:text-black"
 					/>
 				) : (
 					new Date(transactions.date).toLocaleDateString()
 				)}
 			</td>
-			<td className="px-6 py-4 whitespace-nowrap">
+			<td className="px-4 py-3 whitespace-normal">
 				{isEditing ? (
 					<select
 						value={newBudgetId}
 						onChange={(e) => setNewBudgetId(e.target.value)}
-						className="border rounded px-2 py-1 w-full bg-gray-300 dark:text-black"
+						className="border rounded px-2 py-1 w-full text-sm sm:text-base bg-gray-300 dark:text-black"
 					>
 						{budgets.map((budget) => (
 							<option key={budget.id} value={budget.id}>
@@ -159,15 +159,17 @@ export default function TransactionsItem({
 						))}
 					</select>
 				) : budgets.find((b) => b.id === transactions.budget_id) ? (
-					<span className={`px-2 py-1 rounded ${budgetColor} text-white`}>
+					<span
+						className={`px-2 py-1 rounded text-xs sm:text-sm ${budgetColor} text-white`}
+					>
 						{budgets.find((b) => b.id === transactions.budget_id)?.title}
 					</span>
 				) : (
-					'Budget deleted'
+					<span className="text-xs sm:text-sm">Budget deleted</span>
 				)}
 			</td>
-			<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-				<div className="flex justify-start gap-2">
+			<td className="px-4 py-3 whitespace-nowrap">
+				<div className="flex justify-start gap-2 text-sm sm:text-base">
 					{isEditing ? (
 						<>
 							<button
