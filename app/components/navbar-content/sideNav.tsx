@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Home, PieChart, LogOut, Menu } from 'lucide-react';
 import { useAuth } from '../../utils/auth';
 import Image from 'next/image';
-import triple from '../../images/triple.png'; // Import the logo
+import triple from '../../images/triple.png'; 
 
 import { useState } from 'react';
 

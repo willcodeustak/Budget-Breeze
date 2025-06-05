@@ -9,7 +9,33 @@ import type { Budget } from '../../types/budget';
 export default function Reports() {
 	const [transactions, setTransactions] = useState<any[]>([]);
 	const [budgets, setBudgets] = useState<Budget[]>([]);
-	const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+	const getNYDate = () => {
+		const date = new Date();
+		const nyDate = new Date(
+			date.toLocaleString('en-US', { timeZone: 'America/New_York' })
+		);
+		nyDate.setHours(12, 0, 0, 0);
+		return nyDate;
+	};
+
+	const [selectedDate, setSelectedDate] = useState<Date>(getNYDate());
+	const [dateInputValue, setDateInputValue] = useState(
+		getNYDate().toISOString().split('T')[0]
+	);
+
+	const handleDateChange = (value: string) => {
+		// 4 digits validation for year
+		const yearPart = value.split('-')[0];
+		if (yearPart && yearPart.length > 4) return;
+
+		setDateInputValue(value);
+		const date = new Date(value);
+		if (!isNaN(date.getTime())) {
+			date.setHours(12, 0, 0, 0);
+			setSelectedDate(date);
+		}
+	};
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -161,8 +187,8 @@ export default function Reports() {
 			<div className="flex justify-end mb-8 dark:bg-gray-800 dark:text-white">
 				<input
 					type="date"
-					value={selectedDate.toISOString().split('T')[0]}
-					onChange={(e) => setSelectedDate(new Date(e.target.value))}
+					value={dateInputValue}
+					onChange={(e) => handleDateChange(e.target.value)}
 					className="border p-2 rounded dark:bg-gray-800 dark:text-white"
 				/>
 			</div>

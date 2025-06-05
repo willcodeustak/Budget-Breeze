@@ -22,42 +22,42 @@ export default function RootLayout({
 
 	useEffect(() => {
 		const handleResize = () => {
-			// larger screens always show the side menu
-			if (window.innerWidth >= 640) {
+			// Show sidebar on large screens (1024px+)
+			if (window.innerWidth >= 1024) {
 				setIsSideNavOpen(true);
-			} else {
-				// hide side menu on small
+			}
+			// Hide sidebar on smaller screens
+			else {
 				setIsSideNavOpen(false);
 			}
 		};
 
-		// check for size
 		handleResize();
-
-		// resize listener
 		window.addEventListener('resize', handleResize);
-
-		// refresh/clean allows reset
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
 	return (
 		<html lang="en">
 			<body className={inter.className}>
-				<TopNav />
+				<TopNav isDashboard={isDashboard} />
 				<div className="flex">
 					{isDashboard && (
-						<Navigation
-							isSideNavOpen={isSideNavOpen}
-							setIsSideNavOpen={setIsSideNavOpen}
-						/>
+						<div className="hidden lg:block">
+							<Navigation
+								isSideNavOpen={isSideNavOpen}
+								setIsSideNavOpen={setIsSideNavOpen}
+							/>
+						</div>
 					)}
 					<main
-						className={`flex-1 p-8 bg-white dark:bg-gray-800 transition-all duration-300 ${
-							isDashboard && isSideNavOpen ? 'pl-72' : 'pl-0'
+						className={`flex-1 p-4 sm:p-6 lg:p-8 bg-white dark:bg-gray-800 transition-all duration-300 ${
+							isDashboard && isSideNavOpen ? 'lg:pl-72' : 'pl-0'
 						}`}
 					>
-						{children}
+						<div className="w-full max-w-[300px] xs:max-w-[375px] sm:max-w-[540px] lg:max-w-none mx-auto">
+							{children}
+						</div>
 					</main>
 				</div>
 			</body>
