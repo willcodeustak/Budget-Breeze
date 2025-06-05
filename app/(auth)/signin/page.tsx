@@ -1,14 +1,16 @@
 'use client';
 
-import type React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signUp } from '../utils/auth';
+import Link from 'next/link';
+import { signIn } from '../../utils/auth';
+import type { AuthError } from '@supabase/supabase-js';
 import { Toaster, toast } from 'react-hot-toast';
-import breeze from '../images/breeze.jpg';
-import triple from '../images/triple.png';
-
 import Image from 'next/image';
+import { getUser } from '../../utils/auth';
+import Loading from '../../(mainPages)/dashboard/dashboard-content/loading';
+import triple from '../../images/triple.png';
+import breeze from '../../images/breeze.jpg';
 
 function LeftPanel() {
 	return (
@@ -44,31 +46,43 @@ function LeftPanel() {
 		</div>
 	);
 }
-export default function SignUp() {
+export default function SigninPage() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [displayName, setDisplayName] = useState('');
-
 	const [error, setError] = useState<string | null>(null);
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError(null);
-		const { error } = await signUp(email, password, displayName);
-		if (error) {
-			toast.error(error.message);
-		} else {
-			toast.success('Verification has been sent to your email! 🎉', {
+		setLoading(true);
+
+		try {
+			const { error } = await signIn(email, password);
+			if (error) throw error;
+
+			const user = await getUser();
+
+			const displayName = user?.user_metadata?.display_name || 'User';
+			toast.success(`Welcome back, ${displayName} 🎉`, {
+				className: 'text-xl min-w-[300px] z-[9999]',
+				duration: 5000,
+			});
+
+			setTimeout(() => router.push('/dashboard'), 1500);
+		} catch (err) {
+			setLoading(false);
+			const authError = err as AuthError;
+			toast.error(authError.message, {
 				className: 'text-xl p-4 min-w-[300px]',
 			});
-			setTimeout(() => router.push('/signin'), 2000);
 		}
 	};
 
-	const handleBack = () => {
-		router.back();
-	};
+	if (loading) {
+		return <Loading />;
+	}
 
 	return (
 		<div className="min-h-screen flex flex-col md:flex-row">
@@ -95,7 +109,7 @@ export default function SignUp() {
 					</div>
 
 					<h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white text-center">
-						Create a new account
+						Sign in to your account
 					</h2>
 
 					<form
@@ -103,19 +117,6 @@ export default function SignUp() {
 						onSubmit={handleSubmit}
 					>
 						<div className="rounded-md shadow-sm space-y-3 md:space-y-4">
-							<div>
-								<label htmlFor="user-name" className="sr-only">
-									User Name
-								</label>
-								<input
-									type="text"
-									placeholder="Display Name"
-									value={displayName}
-									onChange={(e) => setDisplayName(e.target.value)}
-									required
-									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base md:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
-								/>
-							</div>
 							<div>
 								<label htmlFor="email-address" className="sr-only">
 									Email address
@@ -140,7 +141,7 @@ export default function SignUp() {
 									id="password"
 									name="password"
 									type="password"
-									autoComplete="new-password"
+									autoComplete="current-password"
 									required
 									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base md:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
 									placeholder="Password"
@@ -156,17 +157,17 @@ export default function SignUp() {
 							type="submit"
 							className="w-full flex justify-center py-2 px-4 border border-transparent text-sm md:text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 						>
-							Sign up
+							Sign in
 						</button>
 					</form>
 
 					<div className="text-sm text-center">
-						<button
-							onClick={handleBack}
+						<Link
+							href="/signup"
 							className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
 						>
-							Already have an account? Sign in
-						</button>
+							Don't have an account? Sign up
+						</Link>
 					</div>
 				</div>
 			</div>

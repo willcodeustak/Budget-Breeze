@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { Toaster, toast } from 'react-hot-toast';
-import useColorMode from '../components/navbar-content/useColorMode';
 
 export async function signUp(
 	email: string,

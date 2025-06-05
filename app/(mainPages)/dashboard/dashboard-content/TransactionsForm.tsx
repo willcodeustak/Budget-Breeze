@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
-import type { Budget } from '../../types/budget';
+import type { Budget } from '../../../types/budget';
 import { Toaster, toast } from 'react-hot-toast';
 
 interface TransactionsFormProps {

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Home, PieChart, LogOut, Menu } from 'lucide-react';
 import { useAuth } from '../../utils/auth';
 import Image from 'next/image';
-import triple from '../../images/triple.png'; 
+import triple from '../../images/triple.png';
 
 import { useState } from 'react';
 
@@ -61,7 +61,7 @@ export default function SideNav({
 					</li>
 					<li>
 						<Link
-							href="/dashboard/reports"
+							href="/reports"
 							className="flex items-center space-x-5 text-gray-300 hover:text-blue-400 p-3 rounded-lg transition-all duration-200 ease-in-out hover:bg-gray-700"
 						>
 							<PieChart size={25} />

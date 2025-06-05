@@ -1,16 +1,14 @@
 'use client';
 
+import type React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { signIn } from '../utils/auth';
-import type { AuthError } from '@supabase/supabase-js';
+import { signUp } from '../../utils/auth';
 import { Toaster, toast } from 'react-hot-toast';
+import breeze from '../../images/breeze.jpg';
+import triple from '../../images/triple.png';
+
 import Image from 'next/image';
-import { getUser } from '../utils/auth';
-import Loading from '../dashboard/dashboard-content/loading';
-import triple from '../images/triple.png';
-import breeze from '../images/breeze.jpg';
 
 function LeftPanel() {
 	return (
@@ -46,43 +44,31 @@ function LeftPanel() {
 		</div>
 	);
 }
-export default function SigninPage() {
+export default function SignUp() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [displayName, setDisplayName] = useState('');
+
 	const [error, setError] = useState<string | null>(null);
-	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError(null);
-		setLoading(true);
-
-		try {
-			const { error } = await signIn(email, password);
-			if (error) throw error;
-
-			const user = await getUser();
-
-			const displayName = user?.user_metadata?.display_name || 'User';
-			toast.success(`Welcome back, ${displayName} 🎉`, {
-				className: 'text-xl min-w-[300px] z-[9999]',
-				duration: 5000,
-			});
-
-			setTimeout(() => router.push('/dashboard'), 1500);
-		} catch (err) {
-			setLoading(false);
-			const authError = err as AuthError;
-			toast.error(authError.message, {
+		const { error } = await signUp(email, password, displayName);
+		if (error) {
+			toast.error(error.message);
+		} else {
+			toast.success('Verification has been sent to your email! 🎉', {
 				className: 'text-xl p-4 min-w-[300px]',
 			});
+			setTimeout(() => router.push('/signin'), 2000);
 		}
 	};
 
-	if (loading) {
-		return <Loading />;
-	}
+	const handleBack = () => {
+		router.back();
+	};
 
 	return (
 		<div className="min-h-screen flex flex-col md:flex-row">
@@ -109,7 +95,7 @@ export default function SigninPage() {
 					</div>
 
 					<h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white text-center">
-						Sign in to your account
+						Create a new account
 					</h2>
 
 					<form
@@ -118,11 +104,24 @@ export default function SigninPage() {
 					>
 						<div className="rounded-md shadow-sm space-y-3 md:space-y-4">
 							<div>
-								<label htmlFor="email-address" className="sr-only">
+								<label htmlFor="user-name" className="sr-only">
+									User Name
+								</label>
+								<input
+									type="text"
+									placeholder="Display Name"
+									value={displayName}
+									onChange={(e) => setDisplayName(e.target.value)}
+									required
+									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base md:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
+								/>
+							</div>
+							<div>
+								<label htmlFor="emailAddress" className="sr-only">
 									Email address
 								</label>
 								<input
-									id="email-address"
+									id="emailAddress"
 									name="email"
 									type="email"
 									autoComplete="email"
@@ -141,7 +140,7 @@ export default function SigninPage() {
 									id="password"
 									name="password"
 									type="password"
-									autoComplete="current-password"
+									autoComplete="newPassword"
 									required
 									className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base md:text-lg dark:bg-gray-700 dark:text-white dark:border-gray-600"
 									placeholder="Password"
@@ -157,17 +156,17 @@ export default function SigninPage() {
 							type="submit"
 							className="w-full flex justify-center py-2 px-4 border border-transparent text-sm md:text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
 						>
-							Sign in
+							Sign up
 						</button>
 					</form>
 
 					<div className="text-sm text-center">
-						<Link
-							href="/signup"
+						<button
+							onClick={handleBack}
 							className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
 						>
-							Don't have an account? Sign up
-						</Link>
+							Already have an account? Sign in
+						</button>
 					</div>
 				</div>
 			</div>

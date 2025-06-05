@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { TransactionsItemProps } from '@/app/types/transactions';
-import { useConfirmDelete } from '../../hooks/useConfirmDelete';
+import { useConfirmDelete } from '../../../hooks/useConfirmDelete';
 import { toast } from 'react-hot-toast';
 
 export default function TransactionsItem({

@@ -4,7 +4,7 @@ import BudgetForm from './dashboard-content/BudgetForm';
 import BudgetItem from './dashboard-content/BudgetItem';
 import TransactionsForm from './dashboard-content/TransactionsForm';
 import { supabase } from '@/lib/supabase';
-import type { Budget } from '../types/budget';
+import type { Budget } from '../../types/budget';
 import Table from './dashboard-content/Table';
 import { Toaster } from 'react-hot-toast';
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { BiSend } from 'react-icons/bi';
-import robotic from '../../images/robotic.png';
+import robotic from '../../../images/robotic.png';
 import Image from 'next/image';
 
 type Message = {
